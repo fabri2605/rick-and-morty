@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/Home.module.css';
 import { Provider } from './store/myContext';
-import Morty from './svgs/morty';
+import Morty from './svgs/Morty';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (

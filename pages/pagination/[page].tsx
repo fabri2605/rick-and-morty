@@ -5,7 +5,7 @@ import { GetCharactersResults, Character, Info } from '../../components/types';
 import styles from '../../styles/Home.module.css';
 import React from 'react';
 import PaginationFooter from '../../components/PaginationFooter';
-import CharPreview from '../../components/charPreview';
+import CharPreview from '../../components/CharPreview';
 
 const Pagination: NextPage<{ characters: Character[]; info: Info }> = ({
     characters,
