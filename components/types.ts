@@ -3,7 +3,7 @@ import { InformationEvent } from "http";
 export interface pages {
     actualPage: any | undefined;
     total: any;
-    name: string;
+    name: string | null;
 }
 
 export interface GetCharactersResults{

@@ -4,9 +4,11 @@ import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
 import { Character } from '../../components/types';
 import imageLoader from '../../components/imageLoader';
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import { AppCtx } from '../../components/store/myContext';
 
-const characterPage: React.FC<{ character: Character }> = ({ character }) => {
+const CharacterPage: React.FC<{ character: Character }> = ({ character }) => {
+    const ctx = useContext(AppCtx);
     let episodes = character.episode.map((em) => {
         let e = Number(em.replace(/\D/g, ''));
         if (e <= 11) {
@@ -32,6 +34,10 @@ const characterPage: React.FC<{ character: Character }> = ({ character }) => {
             'This character only appears in the episode ' + episodes[0],
         ];
     }
+
+    useEffect(()=>{
+        ctx?.setLoad(false);
+    },[]);
 
     return (
         <div className={styles.details}>
@@ -86,4 +92,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 };
 
-export default characterPage;
+export default CharacterPage;

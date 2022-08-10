@@ -3,20 +3,25 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { Character, GetCharactersResults, Info } from '../components/types';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AppCtx } from '../components/store/myContext';
+import LoadingRick from '../components/svgs/LoadingRick';
 const Home: NextPage<{ characters: Character[] }> = ({ characters }) => {
     const router = useRouter();
-    const ctx = React.useContext(AppCtx);
+    const ctx = useContext(AppCtx);
 
     const nameSetter = (e: any) => {
+        ctx?.setLoad(true);
         const name = e.target.innerHTML.split(' ')[0];
-        ctx?.setChar(name);
         router.push({
             pathname: '/pagination/1',
             query: { page: '1', char: name },
         });
     };
+
+    useEffect(() => {
+        ctx?.setLoad(false);
+    }, []);
 
     return (
         <div className={styles.principal}>
@@ -29,24 +34,42 @@ const Home: NextPage<{ characters: Character[] }> = ({ characters }) => {
                 />
                 <link rel='icon' href='/rick.ico' />
             </Head>
-            <h1 className={styles.centered}>
-                On wich character you want to dive into?
-            </h1>
-            <div>
-                {characters.map((e) => {
-                    return (
-                        <a key={e.id}>
+            {ctx?.load ? (
+                <div className={styles.main}>
+                    <div className={styles.loader}>
+                        <LoadingRick />
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <h1 className={styles.centered}>
+                        On wich character you want to dive into?
+                    </h1>
+                    <div>
+                        {characters.map((e) => {
+                            return (
+                                <a key={e.id}>
+                                    <h3
+                                        key={e.id}
+                                        onClick={nameSetter}
+                                    >
+                                        {e.name}
+                                    </h3>
+                                </a>
+                            );
+                        })}
+                        <a key={'all'}>
                             <h3
-                                defaultValue={e.name}
-                                key={e.id}
+                                key={'all'}
                                 onClick={nameSetter}
                             >
-                                {e.name}
+                                All Characters
                             </h3>
                         </a>
-                    );
-                })}
-            </div>
+                        ;
+                    </div>
+                </>
+            )}
         </div>
     );
 };

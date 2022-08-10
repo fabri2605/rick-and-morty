@@ -14,14 +14,16 @@ const CharPreview: React.FC<{ name: Character }> = ({ name }) => {
                     <h3>{e.name}</h3>
                 </a>
             </Link>
-            <Image
-                unoptimized
-                loader={imageLoader}
-                alt={e.name}
-                src={e.image}
-                width='200px'
-                height='200px'
-            ></Image>
+            <Link href={`/characters/${e.id}`}>
+                <Image
+                    unoptimized
+                    loader={imageLoader}
+                    alt={e.name}
+                    src={e.image}
+                    width='200px'
+                    height='200px'
+                ></Image>
+            </Link>
         </div>
     );
 };

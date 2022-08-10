@@ -3,15 +3,23 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { GetCharactersResults, Character, Info } from '../../components/types';
 import styles from '../../styles/Home.module.css';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PaginationFooter from '../../components/PaginationFooter';
 import CharPreview from '../../components/CharPreview';
+import LoadingRick from '../../components/svgs/LoadingRick';
+import { AppCtx } from '../../components/store/myContext';
 
 const Pagination: NextPage<{ characters: Character[]; info: Info }> = ({
     characters,
     info,
 }) => {
     const router = useRouter();
+
+    const ctx = useContext(AppCtx);
+    useEffect(() => {
+        ctx?.setLoad(false);
+    }, [router.query.page]);
+
     return (
         <div className={styles.principal}>
             <Head>
@@ -22,26 +30,50 @@ const Pagination: NextPage<{ characters: Character[]; info: Info }> = ({
                 />
                 <link rel='icon' href='/rick.ico' />
             </Head>
-            <h1 className={styles.centered}>Characters</h1>
-            {/* <h1>DATABASE: {process.env.NEXT_PUBLIC_DB_CONNECT}</h1> */}
-            <div className={styles.main}>
-                {characters.map((e) => {
-                    return <CharPreview key={e.id} name={e} />
-                })}
-            </div>
-            <PaginationFooter
-                name={router.query.char?.toString()!}
-                actualPage={router.query.page}
-                total={info.pages}
-            />
+            {ctx?.load ? (
+                <div className={styles.main}>
+                    <div className={styles.loader}>
+                        <LoadingRick />
+                    </div>
+                </div>
+            ) : (
+                <>
+                    {router.query.char === 'All' ? (
+                        <h1 className={styles.centered}>Characters</h1>
+                    ) : (
+                        <h1 className={styles.centered}>
+                            {"Characters containing '"+router.query.char+"'"}
+                        </h1>
+                    )}
+
+                    {/* <h1>DATABASE: {process.env.NEXT_PUBLIC_DB_CONNECT}</h1> */}
+                    <div className={styles.main}>
+                        {characters.map((e) => {
+                            return <CharPreview key={e.id} name={e} />;
+                        })}
+                    </div>
+                    <PaginationFooter
+                        name={router.query.char?.toString()!}
+                        actualPage={router.query.page}
+                        total={info.pages}
+                    />
+                </>
+            )}
         </div>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await fetch(
-        `https://rickandmortyapi.com/api/character/?name=${context.query.char}&page=${context.query.page}`
-    );
+    let res;
+    if (context.query.char === 'All') {
+        res = await fetch(
+            `https://rickandmortyapi.com/api/character/?page=${context.query.page}`
+        );
+    } else {
+        res = await fetch(
+            `https://rickandmortyapi.com/api/character/?name=${context.query.char}&page=${context.query.page}`
+        );
+    }
     const { info, results }: GetCharactersResults = await res.json();
 
     return {
