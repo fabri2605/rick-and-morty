@@ -65,6 +65,7 @@ const characterPage: React.FC<{ character: Character }> = ({ character }) => {
                     src={character.image}
                     width='300px'
                     height='300px'
+                    alt={character.name}
                 />
             </div>
         </div>

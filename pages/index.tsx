@@ -35,7 +35,7 @@ const Home: NextPage<{ characters: Character[] }> = ({ characters }) => {
             <div>
                 {characters.map((e) => {
                     return (
-                        <a>
+                        <a key={e.id}>
                             <h3
                                 defaultValue={e.name}
                                 key={e.id}
