@@ -6,6 +6,7 @@ import { Character } from '../../components/types';
 import imageLoader from '../../components/imageLoader';
 import React, {useContext, useEffect} from 'react';
 import { AppCtx } from '../../components/store/myContext';
+import ArrowLeft from '../../components/svgs/arrowLeft';
 
 const CharacterPage: React.FC<{ character: Character }> = ({ character }) => {
     const ctx = useContext(AppCtx);
@@ -35,6 +36,10 @@ const CharacterPage: React.FC<{ character: Character }> = ({ character }) => {
         ];
     }
 
+    const returnHandler = () =>{
+            history.go(-1);
+    };
+
     useEffect(()=>{
         ctx?.setLoad(false);
     },[]);
@@ -46,6 +51,9 @@ const CharacterPage: React.FC<{ character: Character }> = ({ character }) => {
                 <meta name='description' content={character.name} />
                 <link rel='icon' href='/rick.ico' />
             </Head>
+            <div className={styles.return} onClick={returnHandler}>
+            <ArrowLeft />
+            </div>
             <div className={styles.details_info}>
                 <div>
                     <h2>Name</h2>

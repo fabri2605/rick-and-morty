@@ -20,9 +20,21 @@
 .principal {
     text-align: center;
 }
-.principal a h3 {
+
+.principal div a{
+    text-align: center;
+    width: 50%;
+}
+
+.indexNames {
     animation: characters 1s ease-in-out;
     cursor: pointer;
+    transition: 1s;
+}
+.indexNames:hover {
+    
+    margin-left: 50px;
+    transition: 1s;
 }
 
 .main {
@@ -46,6 +58,12 @@
     box-shadow: 0 0 10px 2px rgb(0, 0, 0);
     text-align: center;
     animation: characters 1s ease-in-out;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.character:hover{
+    transform: scale(110%);
+    transition: 1s;
 }
 .character img {
     border-radius: 6%;
@@ -55,6 +73,12 @@
     font-family: sans-serif;
     font-weight: 100;
     margin-top: 5px;
+}
+
+.return{
+    top: 10%;
+    left: 10%;
+    cursor: pointer;
 }
 
 .pagination button {
@@ -74,7 +98,7 @@
     justify-content: space-evenly;
     align-items: center;
     min-height: 100vh;
-    animation: characters 1s ease-in-out;
+    animation: details 1s ease-in-out;
 }
 .details h2 {
     margin: 0;
@@ -114,24 +138,35 @@
 
 .loader {
     margin-bottom: 150px;
-    animation: rotational 3s infinite;
+    animation: rotational 1.5s infinite;
 }
 
 @keyframes rotational {
     0% {
-        transform: rotateY(0deg);
+        transform: rotateY(0deg) scale(110%) ;
     }
     50% {
-        transform: rotateY(180deg);
+        transform: rotateY(180deg) scale(80%);
     }
     100% {
-        transform: rotateY(360deg);
+        transform: rotateY(360deg) scale(110%);
     }
 }
 @keyframes characters {
     0%{
         opacity: 0;
         transform: translateY(100px);
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+
+    }
+}
+@keyframes details {
+    0%{
+        opacity: 0;
+        transform: translateX(-100px);
     }
     100%{
         transform: translateY(0px);

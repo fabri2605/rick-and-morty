@@ -8,23 +8,21 @@ import { Character } from './types';
 const CharPreview: React.FC<{ name: Character }> = ({ name }) => {
     const e = name;
     return (
-        <div key={e.id} className={styles.character}>
-            <Link href={`/characters/${e.id}`}>
+        <Link href={`/characters/${e.id}`}>
+            <div key={e.id} className={styles.character}>
                 <a>
                     <h3>{e.name}</h3>
                 </a>
-            </Link>
-            <Link href={`/characters/${e.id}`}>
-                <Image
-                    unoptimized
-                    loader={imageLoader}
-                    alt={e.name}
-                    src={e.image}
-                    width='200px'
-                    height='200px'
-                ></Image>
-            </Link>
-        </div>
+                    <Image
+                        unoptimized
+                        loader={imageLoader}
+                        alt={e.name}
+                        src={e.image}
+                        width='200px'
+                        height='200px'
+                    ></Image>
+            </div>
+        </Link>
     );
 };
 

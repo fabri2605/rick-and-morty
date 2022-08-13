@@ -14,7 +14,6 @@ const Pagination: NextPage<{ characters: Character[]; info: Info }> = ({
     info,
 }) => {
     const router = useRouter();
-
     const ctx = useContext(AppCtx);
     useEffect(() => {
         ctx?.setLoad(false);

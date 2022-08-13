@@ -52,6 +52,7 @@ const Home: NextPage<{ characters: Character[] }> = ({ characters }) => {
                                     <h3
                                         key={e.id}
                                         onClick={nameSetter}
+                                        className={styles.indexNames}
                                     >
                                         {e.name}
                                     </h3>
@@ -62,11 +63,12 @@ const Home: NextPage<{ characters: Character[] }> = ({ characters }) => {
                             <h3
                                 key={'all'}
                                 onClick={nameSetter}
+                                className={styles.indexNames}
                             >
                                 All Characters
                             </h3>
                         </a>
-                        ;
+                        
                     </div>
                 </>
             )}
